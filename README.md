@@ -100,5 +100,5 @@ id - The ID of the user (the same as selfId in the object path)
 After all credentials are set, you can run with:
 ```js
 npm install
-npm start
+npm run start
 ```
