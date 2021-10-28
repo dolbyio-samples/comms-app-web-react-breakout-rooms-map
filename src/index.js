@@ -4,6 +4,9 @@ import './index.scss';
 import App from './App';
 import { VoxeetSessionProvider } from './providers/VoxeetSessionProvider';
 import reportWebVitals from './reportWebVitals';
+import { initializeVoxeet } from './utils/voxeetUtils';
+
+initializeVoxeet();
 
 ReactDOM.render(
   <React.StrictMode>

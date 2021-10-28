@@ -1,21 +1,21 @@
-import {
-  initialize,
-  session,
-  conference,
-  mediaDevice,
-} from '@voxeet/voxeet-web-sdk';
+import '@voxeet/voxeet-web-sdk';
+import VoxeetSDK from '@voxeet/voxeet-web-sdk';
 
-import {
-  setupNewClassroomAtCell,
-  getClassroomDataAtCell,
-} from './firebaseUtils';
+// This is due to a breaking change in version 3.2.0,
+// in which these functions are expected to be invoked as methods
+// on the SDK object, like VoxeetSDK.initialize().
+const initialize = VoxeetSDK.initialize.bind(VoxeetSDK);
+const session = VoxeetSDK.session;
+const mediaDevice = VoxeetSDK.mediaDevice;
+const conference = VoxeetSDK.conference;
 
-// Enter your credentials from Dolby.io here:
-// https://dolby.io/dashboard/applications/summary
 const consumerKey = '<DOLBYIO_COMMUNICATIONS_API>';
 const consumerSecret = '<DOLBYIO_COMMUNICATIONS_SECRET>';
 
-initialize(consumerKey, consumerSecret);
+// const mediaDeviceService = mediaDevice();
+export const initializeVoxeet = () => {
+  initialize(consumerKey, consumerSecret);
+};
 
 /**
  * This function either creates a new session if there isn't anyone in one with that alias
@@ -38,30 +38,9 @@ const createConference = (alias) => {
   });
 };
 
-const getConference = () => {
-  return conference;
-};
-
 // conference in/out
-const joinConference = async (conf) => {
-  conference.join(conf, {
-    constraints: {
-      audio: false,
-      video: true,
-    },
-  });
-  if (conf.isNew) {
-    console.log('creating new conference');
-    // load with blank classroom
-    const classRoom = await setupNewClassroomAtCell({ cell: conf.alias });
-    // return classroom object
-    return classRoom;
-  } else {
-    console.log('joining existing conference');
-    // return classroom object
-    const classRoom = await getClassroomDataAtCell({ cell: conf.alias });
-    return classRoom;
-  }
+const joinConference = (conf) => {
+  conference.join(conf, {});
 };
 
 const leaveConference = () => {
@@ -147,29 +126,10 @@ const changeVideoDevice = (deviceId) => {
     .catch((err) => console.error);
 };
 
-const startScreenShare = () => {
-  conference
-    .startScreenShare()
-    .then(() => {})
-    .catch((e) => {});
-};
-
-const stopScreenShare = () => {
-  conference
-    .stopScreenShare()
-    .then(() => {})
-    .catch((e) => {});
-};
-
-const getParticipantAudioLevel = (p, callback) => {
-  conference.audioLevel(p, callback);
-};
-
 export {
   createConference,
   joinConference,
   leaveConference,
-  getConference,
   startVideo,
   stopVideo,
   startAudio,
@@ -178,7 +138,4 @@ export {
   getVideoDevices,
   changeAudioDevice,
   changeVideoDevice,
-  startScreenShare,
-  stopScreenShare,
-  getParticipantAudioLevel,
 };

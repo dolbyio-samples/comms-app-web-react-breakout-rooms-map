@@ -7,8 +7,8 @@ export const VoxeetSessionProvider = ({ children }) => {
   const [isSessionLoaded, setIsSessionLoaded] = useState(false);
 
   useEffect(() => {
-    // how can I tell if a session is opened?
     session.open({ name }).then(() => {
+      console.log('created a session');
       setIsSessionLoaded(true);
     });
   }, []);

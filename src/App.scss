@@ -1,10 +1,10 @@
 @import './styles/colors.scss';
 .app {
+  flex: 1;
   display: flex;
-  flex-flow: column;
   height: 100%;
+  flex-flow: column;
   background-color: #3d44844f;
-  // background-color: rgba(255, 255, 255, 0.2);
 
   .utility-bar {
     background-color: $primary-dark-3;
@@ -12,20 +12,9 @@
     justify-content: flex-end;
   }
 
-  .participant-grid > .participant-grid-item.flipped >  video {
-    object-fit: cover;
-    width: 100% !important;
-    height: 100% !important;
-    z-index: 0;
-    position: absolute;
+  .flipped {
     transform: rotateY(180deg);
     -webkit-transform: rotateY(180deg); /* Safari and Chrome */
     -moz-transform: rotateY(180deg); /* Firefox */
-   }
-
-  video#teacher-video-object.teacher__video.flipped {
-    transform: rotateY(180deg);
-    -webkit-transform: rotateY(180deg); /* Safari and Chrome */
-    -moz-transform: rotateY(180deg); /* Firefox */
-   }
+  }
 }

@@ -1,0 +1,50 @@
+.water-cooler-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 40px 40px;
+
+  line-height: 25px;
+
+  svg.water-cooler {
+    border-radius: 4px;
+    /* This implements the arrow key movement animation. */
+    .avatar,
+    .avatar-video {
+      transition: transform 0.5s;
+      transition-timing-function: linear;
+    }
+
+    .avatar-video video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .top,
+  .bottom {
+    width: 100%;
+    display: flex;
+    color: white;
+    font-size: 16px;
+  }
+  .top {
+    flex-direction: column;
+    align-items: center;
+    .title {
+      font-size: 20px;
+      margin-bottom: 3px;
+      font-weight: bold;
+    }
+  }
+  .bottom {
+    justify-content: space-between;
+    /* To counterbalance app controls in layout. Invisible but impacts layout. */
+    .counterweight {
+      width: 128px;
+    }
+  }
+}
