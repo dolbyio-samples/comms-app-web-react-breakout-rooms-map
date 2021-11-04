@@ -25,7 +25,8 @@
   }
 
   .top,
-  .bottom {
+  .bottom,
+  .map-image-container {
     width: 100%;
     display: flex;
     color: white;
@@ -39,6 +40,10 @@
       margin-bottom: 3px;
       font-weight: bold;
     }
+  }
+  .map-image-container {
+    height: 700px;
+    width: 1480px;
   }
   .bottom {
     justify-content: space-between;

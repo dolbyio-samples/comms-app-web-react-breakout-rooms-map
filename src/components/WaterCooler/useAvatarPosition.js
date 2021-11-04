@@ -32,24 +32,23 @@ export const useAvatarPosition = ({ initialPosition = [200, 200] }) => {
     return () => document.removeEventListener('keydown', listener);
   }, []);
 
-//Left
-if (position[0] < 50){
-  position[0] = 51
-}
-//right
-if (position[0] > 560){
-  position[0] = 559
-}
+  //Left
+  if (position[0] < 20) {
+    position[0] = 19;
+  }
+  //right
+  if (position[0] > 1460) {
+    position[0] = 1459;
+  }
 
-//top
-if (position[1] < 60){
-  position[1] = 59
-}
-//bottom
-if (position[1] > 575){
-  position[1] = 574
-}
-
+  //top
+  if (position[1] < 18) {
+    position[1] = 19;
+  }
+  //bottom
+  if (position[1] > 665) {
+    position[1] = 664;
+  }
 
   return position;
 };

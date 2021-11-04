@@ -28,8 +28,8 @@ const selfColor = colors[Math.floor(Math.random() * colors.length)];
 const iconNames = Object.keys(icons);
 const selfIcon = iconNames[Math.floor(Math.random() * iconNames.length)];
 
-const svgWidth = 617;
-const svgHeight = 617;
+const svgWidth = '100%';
+const svgHeight = '100%';
 
 const initialPosition = [200, 200];
 
@@ -74,37 +74,37 @@ export function WaterCooler({ cell }) {
           entering the same grid cell as other users.
         </div>
       </div>
-      <svg width={svgWidth} height={svgHeight} className="water-cooler">
-        <image
-          href="1275-market-st-16th-optimized.png"
-          x="0"
-          y="0"
-          height="1324px"
-          width="2016px"
-          transform="scale(0.49) translate(-405,-39)"
-        />
+      <div className="map-image-container">
+        <svg width={svgWidth} height={svgHeight} className="water-cooler">
+          <image
+            href="1275-market-st-16th-optimized.png"
+            x="0"
+            y="0"
+            transform="scale(1) translate(-443, -605)"
+          />
 
-        <HexGridOverlay activeHexId={activeHexId} />
+          <HexGridOverlay activeHexId={activeHexId} />
 
-        {remotePositions.map(({ position, color, id, icon }) => (
+          {remotePositions.map(({ position, color, id, icon }) => (
+            <AvatarOrVideo
+              key={id}
+              id={id}
+              position={position}
+              color={color}
+              icon={icon}
+              participants={participants}
+            />
+          ))}
           <AvatarOrVideo
-            key={id}
-            id={id}
+            color={selfColor}
+            icon={selfIcon}
             position={position}
-            color={color}
-            icon={icon}
+            id={joinInfo ? joinInfo.id : null}
+            isSelf
             participants={participants}
           />
-        ))}
-        <AvatarOrVideo
-          color={selfColor}
-          icon={selfIcon}
-          position={position}
-          id={joinInfo ? joinInfo.id : null}
-          isSelf
-          participants={participants}
-        />
-      </svg>
+        </svg>
+      </div>
       <div className="bottom">
         <AppControls />
         <CallToActionButton />

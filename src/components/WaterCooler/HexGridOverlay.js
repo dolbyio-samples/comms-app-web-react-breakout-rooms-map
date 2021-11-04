@@ -6,7 +6,7 @@ import { geoOrthographic, geoPath } from 'd3';
 const lng = 142.868226;
 const lat = 75.147338;
 const HEX_ZOOM_SIZE = 8;
-const K_RING_LEVELS = 5;
+const K_RING_LEVELS = 10;
 const SCALE = 1000000;
 
 const projection = geoOrthographic().scale(SCALE).rotate([-lng, -lat, -2.4]);
