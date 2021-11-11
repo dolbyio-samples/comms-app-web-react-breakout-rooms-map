@@ -13,8 +13,8 @@ export const ParticipantVideo = ({ position, videoStream, isSelf }) => {
 
   let isSafari = navigator.vendor === 'Apple Computer, Inc.' ? true : false;
 
-  let topPosition = isSafari ? position[1] + 70 : 0;
-  let leftPosition = isSafari ? position[0] + 265 : 0;
+  let topPosition = isSafari ? position[1] + 106 : 0;
+  let leftPosition = isSafari ? position[0] + 203 : 0;
 
   useEffect(() => {
     navigator.attachMediaStream(ref.current, videoStream);
