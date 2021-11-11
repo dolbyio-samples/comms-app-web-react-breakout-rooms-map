@@ -13,8 +13,8 @@ export const ParticipantVideo = ({ position, videoStream, isSelf }) => {
 
   let isSafari = navigator.vendor === 'Apple Computer, Inc.' ? true : false;
 
-  let topPosition = isSafari ? position[1] + 106 : 0;
-  let leftPosition = isSafari ? position[0] + 203 : 0;
+  let topPosition = isSafari ? position[1] - 20 : 0;
+  let leftPosition = isSafari ? position[0] - 20 : 0;
 
   useEffect(() => {
     navigator.attachMediaStream(ref.current, videoStream);
@@ -28,21 +28,20 @@ export const ParticipantVideo = ({ position, videoStream, isSelf }) => {
       })`}
     >
       <foreignObject width={size} height={size}>
-        <div>
-          <video
-            class={addFlipClass}
-            ref={ref}
-            style={{
-              position: 'absolute',
-              top: `${topPosition}px`,
-              left: `${leftPosition}px`,
-              borderRadius: `${size / 2}px`,
-            }}
-            playsInline
-            autoPlay
-            muted
-          ></video>
-        </div>
+        <video
+          className={addFlipClass}
+          ref={ref}
+          style={{
+            position: 'absolute',
+            top: `${topPosition}px`,
+            left: `${leftPosition}px`,
+            borderRadius: `${size / 2}px`,
+            transform: 'translate3d(0, 0, 200px)', // fix for safari to make video top most layer
+          }}
+          playsInline
+          autoPlay
+          muted
+        ></video>
       </foreignObject>
     </g>
   );
