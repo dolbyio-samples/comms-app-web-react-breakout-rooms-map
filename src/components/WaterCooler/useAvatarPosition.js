@@ -8,7 +8,7 @@ const directions = {
 };
 
 // How many pixels it moves by on each arrow press.
-const speed = 10;
+const speed = 5; //10
 
 const reducer = (position, direction) => [
   position[0] + direction[0] * speed,

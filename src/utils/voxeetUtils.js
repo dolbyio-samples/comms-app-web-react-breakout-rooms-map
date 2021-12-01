@@ -9,6 +9,8 @@ const session = VoxeetSDK.session;
 const mediaDevice = VoxeetSDK.mediaDevice;
 const conference = VoxeetSDK.conference;
 
+// To configure your app to used the closed spatial beta, sign up at https://go.dolby.io/spatial-audio
+// Spatial enable key and secret
 const consumerKey = '<DOLBYIO_COMMUNICATIONS_API>';
 const consumerSecret = '<DOLBYIO_COMMUNICATIONS_SECRET>';
 

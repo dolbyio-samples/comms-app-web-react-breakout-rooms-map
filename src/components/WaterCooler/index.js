@@ -5,12 +5,12 @@ import { icons } from './Avatar';
 import { AvatarOrVideo } from './AvatarOrVideo';
 import { useAvatarPosition } from './useAvatarPosition';
 import { useRemotePositions } from './useRemotePositions';
-import { HexGridOverlay, positionToH3 } from './HexGridOverlay';
+import { positionToH3 } from './HexGridOverlay';
 import { useMeeting } from './useMeeting';
 import { useBroadcastPosition } from './useBroadcastPosition';
-import { useStopAudio } from './useStopAudio';
 import { useParticipants } from './useParticipants';
 import { useKillZombies } from './useKillZombies';
+import { conference, session } from '@voxeet/voxeet-web-sdk';
 import './WaterCooler.scss';
 
 // The color that your avatar will appear.
@@ -34,12 +34,23 @@ const svgHeight = '100%';
 const initialPosition = [200, 200];
 
 export function WaterCooler({ cell }) {
-  // Place the user in a live meeting based on the activeHexId they are in.
+  // Join meeting
   const joinInfo = useMeeting(cell);
 
   // The position of the avatar representing the user.
-  // This hook implements the arrow key interactions.
+  // This hook implements the arrow key interactions,
+  // and returns the [px,px] coordinate position of the particiapnt.
   const position = useAvatarPosition({ initialPosition });
+
+  // once the local participant has joined,
+  if (joinInfo) {
+    // set the spatial positioning for the local particiapant
+    conference.setSpatialPosition(session.participant, {
+      x: position[0],
+      y: position[1],
+      z: 1,
+    });
+  }
 
   // The id of the "active" hexagon - the one the user avatar is inside.
   const activeHexId = useMemo(() => positionToH3(position), [position]);
@@ -60,10 +71,24 @@ export function WaterCooler({ cell }) {
   // Ensure there are no stale Firebase entries for people who have left.
   useKillZombies({ cell, remotePositions });
 
-  // Stop audio for remote users who are not in the same hexagon.
-  useStopAudio({ joinInfo, activeHexId, remotePositions });
+  if (remotePositions && conference.participants) {
+    // For each user we are tracking in Firebase,
+    for (const p of remotePositions) {
+      // see if there is a corresponding participant in the Dolby.io conference
+      const participant = conference.participants.get(p.id);
+      if (participant) {
+        // set the spatial position of the remote participant,
+        // based on the object that contains position in Firebase for that user (which is kept in sync with useBroadCastPosition)
+        conference.setSpatialPosition(participant, {
+          x: p.position[0],
+          y: p.position[1],
+          z: 1,
+        });
+      }
+    }
+  }
 
-  const participants = useParticipants(joinInfo);
+  const participants = useParticipants(joinInfo, position);
 
   return (
     <div className="water-cooler-container">
@@ -82,9 +107,6 @@ export function WaterCooler({ cell }) {
             y="0"
             transform="scale(1) translate(-443, -605)"
           />
-
-          <HexGridOverlay activeHexId={activeHexId} />
-
           {remotePositions.map(({ position, color, id, icon }) => (
             <AvatarOrVideo
               key={id}
