@@ -30,7 +30,7 @@ export const useMeeting = (cell) => {
       setJoinInfo({
         id: session.participant.id,
       });
-      // configure spatial environment and set on conference
+      // configure spatial environment and set on conference, [1480, 700] is the pixel size of the floor plan image container
       const scale = { x: 1480 / 16, y: 700 / 12, z: 1 }; // scale room to 16 meters x 12 meters
       const forward = { x: 0, y: -1, z: 0 };
       const up = { x: 0, y: 0, z: 1 };
